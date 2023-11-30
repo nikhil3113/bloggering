@@ -1,7 +1,12 @@
-import express from 'express';
-import { authenticateUser } from '../middleware/authenticate.js';
-import {Blog} from '../models/BlogModel.js';
-import { addBlog, deleteBlog, getId, showBlogs, updateBlog } from '../controllers/BlogController.js';
+// import express from 'express';
+// import { authenticateUser } from '../middleware/authenticate.js';
+// import {Blog} from '../models/BlogModel.js';
+// import { addBlog, deleteBlog, getId, showBlogs, updateBlog } from '../controllers/BlogController.js';
+
+const express = require('express');
+const { authenticateUser } = require('../middleware/authenticate.js');
+const {Blog} = require('../models/BlogModel.js');
+const { addBlog, deleteBlog, getId, showBlogs, updateBlog } = require('../controllers/BlogController.js');
 
 const router = express.Router();
 
@@ -29,4 +34,4 @@ router.delete('/:id',authenticateUser, deleteBlog)
 
 
 
-export default router;
+module.exports = router;

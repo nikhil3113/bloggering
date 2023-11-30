@@ -1,9 +1,11 @@
-import {Blog} from '../models/BlogModel.js';
-import User  from '../models/UserModel.js';
+// import {Blog} from '../models/BlogModel.js';
+// import User  from '../models/UserModel.js';
+
+const {Blog} = require('../models/BlogModel.js');
 
 
 //create new blog
-export const addBlog = async (req, res) => {
+ const addBlog = async (req, res) => {
     const{title, content} = req.body;
     try{
         if (!req.user || !req.user.username) {
@@ -31,8 +33,9 @@ export const addBlog = async (req, res) => {
     }
 }
 
+
 //get all blogs
-export const showBlogs = async (req, res) => {
+ const showBlogs = async (req, res) => {
     const token = req.headers.authorization;
     try {
         const blogs = await Blog.find({});
@@ -49,7 +52,7 @@ export const showBlogs = async (req, res) => {
 }
 
 //get one blog by id
-export const getId = async(req, res) =>{
+ const getId = async(req, res) =>{
     try{
         const {id}  = req.params;
         const blog = await Blog.findById(id);
@@ -62,7 +65,7 @@ export const getId = async(req, res) =>{
 }
 
 //update blog
-export const updateBlog = async(req, res) =>{
+ const updateBlog = async(req, res) =>{
     const {title, content} = req.body;
     try{
         if(!title || !content){
@@ -91,7 +94,7 @@ export const updateBlog = async(req, res) =>{
 
 //delete blog
 
-export const deleteBlog = async(req, res) =>{
+ const deleteBlog = async(req, res) =>{
     try{
         const {id} = req.params;
         const result = await Blog.findByIdAndDelete(id);
@@ -108,3 +111,5 @@ export const deleteBlog = async(req, res) =>{
         res.status(500).send({message: err.message})
     }
 }
+
+module.exports = { addBlog, deleteBlog, getId, showBlogs, updateBlog };

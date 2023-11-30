@@ -1,10 +1,13 @@
 // authenticate.js
-import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
+// import jwt from 'jsonwebtoken';
+// import dotenv from 'dotenv';
+
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
 
 dotenv.config();
 
-export const authenticateUser = (req, res, next) => {
+ const authenticateUser = (req, res, next) => {
   const token = req.headers.authorization;
 
   if (!token) {
@@ -34,3 +37,4 @@ export const authenticateUser = (req, res, next) => {
       });
   }
 };
+module.exports = { authenticateUser };

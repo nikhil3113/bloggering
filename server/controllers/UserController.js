@@ -1,12 +1,17 @@
-import bcrypt from 'bcryptjs';
-import User  from '../models/UserModel.js';
-import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv'; // Import dotenv
+// import bcrypt from 'bcryptjs';
+// import User  from '../models/UserModel.js';
+// import jwt from 'jsonwebtoken';
+// import dotenv from 'dotenv'; // Import dotenv
+
+const bcrypt = require('bcryptjs');
+const User = require('../models/UserModel.js');
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv'); // Import dotenv
 
 dotenv.config(); 
 
 
-export const login = async (req, res) => {
+ const login = async (req, res) => {
     const { email, password } = req.body;
     try {
         if(!email || !password){
@@ -25,7 +30,6 @@ export const login = async (req, res) => {
 
 
         const isPasswordCorrect = await bcrypt.compare(password, existingUser.password);
-        // console.log(isPasswordCorrect);
         
         if (!isPasswordCorrect) {
             console.error('Password comparison error:', isPasswordCorrect);
@@ -56,7 +60,7 @@ export const login = async (req, res) => {
     }
 }
 
-export const signUp = async (req, res) => {
+ const signUp = async (req, res) => {
     const { username, email, password } = req.body;
 
     try {
@@ -89,7 +93,7 @@ export const signUp = async (req, res) => {
     }
 }
 
-export const logout = async (req, res) => {
+ const logout = async (req, res) => {
     try {
         // Clear the token cookie
         res.clearCookie('token');
@@ -102,7 +106,7 @@ export const logout = async (req, res) => {
     }
 }
 
-export const getUserId = async(req, res) =>{
+ const getUserId = async(req, res) =>{
     try{
         const {id}  = req.params;
         const user = await User.findById(id);
@@ -114,7 +118,7 @@ export const getUserId = async(req, res) =>{
 
 }
 
-export const updateUser = async(req, res) =>{
+ const updateUser = async(req, res) =>{
     const {username} = req.body;
     try{
         if(!username){
@@ -139,3 +143,5 @@ export const updateUser = async(req, res) =>{
         res.status(500).send({message: err.message})
     }
 }
+
+module.exports = { login, signUp, logout, getUserId, updateUser };
