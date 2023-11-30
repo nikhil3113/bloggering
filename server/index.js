@@ -1,0 +1,35 @@
+import express from "express";
+import bodyParser from "body-parser";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import route from "./routes/route.js";
+import auth from "./routes/auth.js";
+import cors from 'cors';
+import cookieParser from "cookie-parser";
+
+dotenv.config();
+
+const app = express();
+
+app.use(bodyParser.json()); 
+
+app.use(cors());
+
+app.use(cookieParser());
+
+mongoose
+    .connect(process.env.MONGO_URL)
+    .then(()=>{
+        console.log("Database connected");
+    })
+    .catch((error)=>{ 
+        console.log(error);
+    })
+
+app.use('/', route);
+app.use('/auth', auth);
+
+let PORT = process.env.PORT || 5000; 
+app.listen(PORT,()=>{
+    console.log(`App is listening to port: ${PORT}`);
+}) 
