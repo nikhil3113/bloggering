@@ -16,7 +16,7 @@ const UpdateBlog = ({token}) => {
       return;
     }
 
-    axios.get(`http://localhost:5000/${id}`,{
+    axios.get(`https://bloggering-app.onrender.com/${id}`,{
       headers:{
         Authorization: token
       }

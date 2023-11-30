@@ -19,7 +19,7 @@ const CreateBlog = ({token}) => {
 
   const handleBlog = (e) =>{
     e.preventDefault();
-       axios.post('http://localhost:5000/home',{
+       axios.post('https://bloggering-app.onrender.com/home',{
         title,
         content,
       },{

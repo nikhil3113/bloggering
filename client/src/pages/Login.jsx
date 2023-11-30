@@ -11,7 +11,7 @@ const Login = ({ setToken }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/auth/login", {
+      const response = await axios.post("https://bloggering-app.onrender.com/auth/login", {
         email,
         password,
       });

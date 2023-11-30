@@ -12,7 +12,7 @@ const SignUp = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:5000/auth", {
+      const response = await axios.post("https://bloggering-app.onrender.com/auth", {
         username,
         email,
         password,

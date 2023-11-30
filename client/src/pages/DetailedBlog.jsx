@@ -11,7 +11,7 @@ const DetailedBlog = ({ token }) => {
   const { id } = useParams();
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/${id}`, {
+      .get(`https://bloggering-app.onrender.com/${id}`, {
         headers: {
           Authorization: token,
         },

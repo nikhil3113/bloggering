@@ -19,7 +19,7 @@ const DeleteBlog = ({token}) => {
 
   const handleDeleteBook = ()=>{
     axios
-      .delete(`http://localhost:5000/${id}`,{
+      .delete(`https://bloggering-app.onrender.com/${id}`,{
         headers:{
           Authorization: token
         }

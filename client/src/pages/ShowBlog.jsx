@@ -24,7 +24,7 @@ const ShowBlog = ({token}) => {
       return;
     }
     axios
-    .get('http://localhost:5000/home', {
+    .get('https://bloggering-app.onrender.com/home', {
       headers: {
         Authorization: token,
       },

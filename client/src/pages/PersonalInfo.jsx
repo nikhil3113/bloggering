@@ -22,7 +22,7 @@ const PersonalInfo = ({ token }) => {
       return;
     }
     axios
-      .get(`http://localhost:5000/auth/${id}`, {
+      .get(`https://bloggering-app.onrender.com/auth/${id}`, {
         headers: {
           Authorization: token,
         },
@@ -39,7 +39,7 @@ const PersonalInfo = ({ token }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/home", {
+      .get("https://bloggering-app.onrender.com/home", {
         headers: {
           Authorization: token,
         },
