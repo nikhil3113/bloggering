@@ -9,6 +9,7 @@ const router = express.Router();
 // nikhil123
 
 router.get('/', (req, res) => { 
+  res.type('application/javascript');
   res.status(200).json({ message: 'Hello from server!' });
 });
 
