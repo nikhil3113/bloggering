@@ -34,7 +34,7 @@ const UpdateBlog = ({token}) => {
   const handleEditBlog = (e) =>{
     e.preventDefault()
     console.log("for submited");
-    axios.put(`http://localhost:5000/${id}`, {
+    axios.put(`https://bloggering-app.onrender.com/${id}`, {
       title,
       content
     },{

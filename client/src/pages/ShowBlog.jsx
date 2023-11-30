@@ -41,7 +41,7 @@ const ShowBlog = ({token}) => {
 
   const handleLogout = async() =>{
     try {
-      await axios.post("http://localhost:5000/auth/logout");
+      await axios.post("https://bloggering-app.onrender.com/auth/logout");
       localStorage.removeItem('token')
       navigate('/');
     } catch (error) {
