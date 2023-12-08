@@ -1,17 +1,20 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import Loader from "../components/Loader";
 
 const SignUp = () => {
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
 
     try {
+      setLoading(true)
       const response = await axios.post("https://bloggering-app.onrender.com/auth", {
         username,
         email,
@@ -20,13 +23,16 @@ const SignUp = () => {
       console.log(response.data);
       navigate("/auth/login");
     } catch (error) {
-      alert("error")
+      alert(error.response.data.message)
       console.log(error);
+    } finally{
+      setLoading(false)
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-700">
+      {loading? <Loader />: 
       <div className="w-full max-w-md ">
         <div className="bg-white p-8 rounded-lg shadow-md ">
           <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
@@ -78,6 +84,7 @@ const SignUp = () => {
           </p>
         </div>
       </div>
+}
     </div>
   );
 };

@@ -7,6 +7,7 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { BsInfoCircle } from "react-icons/bs";
 import { MdOutlineDelete } from "react-icons/md";
 import jwt_decode from "jwt-decode";
+import Loader from "../components/Loader";
 
 // eslint-disable-next-line react/prop-types
 const PersonalInfo = ({ token }) => {
@@ -14,6 +15,7 @@ const PersonalInfo = ({ token }) => {
   const [email, setEmail] = useState("");
   const [blog, setBlog] = useState([]);
   const { id } = useParams();
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,6 +32,7 @@ const PersonalInfo = ({ token }) => {
       .then((response) => {
         setUsername(response.data.username);
         setEmail(response.data.email);
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error.response.data.message);
@@ -47,6 +50,7 @@ const PersonalInfo = ({ token }) => {
       .then((response) => {
         setBlog(response.data.data);
         // console.log(response.data);
+        setLoading(false);
       })
       .catch((error) => {
         alert(error.response.data.message);
@@ -70,6 +74,7 @@ const PersonalInfo = ({ token }) => {
 
   return (
     <>
+      {loading? <Loader /> :
       <div className="flex flex-col justify-center items-center">
         <h1 className="text-5xl font-bold text-center relative xl:top-10 top-10 text-[#293241] font-serif ">
           Hello {username}
@@ -105,10 +110,12 @@ const PersonalInfo = ({ token }) => {
           </div>
         </div>
       </div>
+}
+
       <h1 className="text-5xl font-bold text-left ml-10 relative mt-10 text-[#293241] font-serif ">
         Your Articles
       </h1>
-      
+    {loading ? <Loader /> : 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center">
         {blog.filter((item) => item.author === username).map((item) => (
           <div key={item._id}  className="mx-auto">
@@ -141,6 +148,7 @@ const PersonalInfo = ({ token }) => {
           </div>
         ))}
       </div>
+}
     </>
   );
 };

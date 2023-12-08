@@ -9,6 +9,7 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { BsInfoCircle } from "react-icons/bs";
 import { MdOutlineDelete } from "react-icons/md";
 import jwt_decode from "jwt-decode";
+import Loader from "../components/Loader";
 
 
 
@@ -16,6 +17,7 @@ import jwt_decode from "jwt-decode";
 const ShowBlog = ({token}) => {
   const [blog, setBlog] = useState([]);
   const navigate = useNavigate();
+  const [ loading, setLoading] = useState(true)
 
 
   useEffect(() => {
@@ -32,6 +34,7 @@ const ShowBlog = ({token}) => {
     .then((response) => {
       setBlog(response.data.data);
       // console.log(response.data);
+      setLoading(false)
     })
     .catch((error) => {
       alert(error.response.data.message);
@@ -106,6 +109,7 @@ const ShowBlog = ({token}) => {
         </Link>
         </div>
       </div>
+      {loading ? <Loader />: 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {blog.map((item) => (
           <div key={item._id} className="shadow-lg m-5 p-4 rounded-3xl">
@@ -136,6 +140,7 @@ const ShowBlog = ({token}) => {
           </div>
         ))}
       </div>
+      }
     </>
   );
 };

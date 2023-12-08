@@ -1,16 +1,19 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import Loader from "../components/Loader";
 
 // eslint-disable-next-line react/prop-types
 const Login = ({ setToken }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const[loading, setLoading] = useState(false)
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true)
       const response = await axios.post("https://bloggering-app.onrender.com/auth/login", {
         email,
         password,
@@ -20,12 +23,15 @@ const Login = ({ setToken }) => {
       navigate("/home");
     } catch (error) {
       alert(error.response.data.message)
-      console.log(error.response.data);
+      // console.log(error.response.data);
+    } finally{
+      setLoading(false)
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-700">
+      {loading ? <Loader /> : 
       <div className="w-full max-w-md">
         <div className="bg-white p-8 rounded-lg shadow-md">
           <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
@@ -67,6 +73,7 @@ const Login = ({ setToken }) => {
           </p>
         </div>
       </div>
+}
     </div>
   );
 };

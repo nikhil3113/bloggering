@@ -26,7 +26,7 @@ const UpdateBlog = ({token}) => {
             setContent(response.data.content)
           })
           .catch((error)=>{
-            alert(error.response.data.message);
+            alert(error.response);
             console.log(error);
           })
   },[token, navigate, id])
