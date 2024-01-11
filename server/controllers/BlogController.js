@@ -1,6 +1,3 @@
-// import {Blog} from '../models/BlogModel.js';
-// import User  from '../models/UserModel.js';
-
 const {Blog} = require('../models/BlogModel.js');
 
 

@@ -1,11 +1,4 @@
-// import express from "express";
-// import bodyParser from "body-parser";
-// import mongoose from "mongoose";
-// import dotenv from "dotenv";
-// import route from "./routes/route.js";
-// import auth from "./routes/auth.js";
-// import cors from 'cors';
-// import cookieParser from "cookie-parser";
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
