@@ -10,8 +10,8 @@ const Home = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-700">
       <div className="text-center text-white">
-        <h1 className="text-5xl font-bold mb-4">Welcome to Your App</h1>
-        <p className="text-lg mb-8">Where Amazing Things Happen!</p>
+        <h1 className="text-5xl font-bold mb-4">Welcome to Bloggering</h1>
+        <p className="text-lg mb-8">Where Developers post their thoughts!</p>
         <button
           type="submit"
           onClick={handleButton}
