@@ -11,7 +11,7 @@ const DetailedBlog = ({ token }) => {
   const { id } = useParams();
   useEffect(() => {
     axios
-      .get(`https://bloggering-app.onrender.com/${id}`, {
+      .get(`${import.meta.env.VITE_API_URL}/${id}`, {
         headers: {
           Authorization: token,
         },

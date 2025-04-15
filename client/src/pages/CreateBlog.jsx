@@ -19,7 +19,7 @@ const CreateBlog = ({token}) => {
 
   const handleBlog = (e) =>{
     e.preventDefault();
-       axios.post('https://bloggering-app.onrender.com/home',{
+       axios.post(`${import.meta.env.VITE_API_URL}/home`,{
         title,
         content,
       },{

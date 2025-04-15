@@ -24,7 +24,7 @@ const PersonalInfo = ({ token }) => {
       return;
     }
     axios
-      .get(`https://bloggering-app.onrender.com/auth/${id}`, {
+      .get(`${import.meta.env.VITE_API_URL}/auth/${id}`, {
         headers: {
           Authorization: token,
         },
@@ -42,7 +42,7 @@ const PersonalInfo = ({ token }) => {
 
   useEffect(() => {
     axios
-      .get("https://bloggering-app.onrender.com/home", {
+      .get(`${import.meta.env.VITE_API_URL}/home`, {
         headers: {
           Authorization: token,
         },

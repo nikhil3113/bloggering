@@ -11,48 +11,44 @@ import { MdOutlineDelete } from "react-icons/md";
 import jwt_decode from "jwt-decode";
 import Loader from "../components/Loader";
 
-
-
 // eslint-disable-next-line react/prop-types
-const ShowBlog = ({token}) => {
+const ShowBlog = ({ token }) => {
   const [blog, setBlog] = useState([]);
   const navigate = useNavigate();
-  const [ loading, setLoading] = useState(true)
-
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if(!token){
+    if (!token) {
       navigate("/");
       return;
     }
     axios
-    .get('https://bloggering-app.onrender.com/home', {
-      headers: {
-        Authorization: token,
-      },
-    })
-    .then((response) => {
-      setBlog(response.data.data);
-      // console.log(response.data);
-      setLoading(false)
-    })
-    .catch((error) => {
-      alert(error.response.data.message);
-      console.log(error.response.data);
-    });
-  },[token, navigate]);
+      .get(`${import.meta.env.VITE_API_URL}/home`, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((response) => {
+        setBlog(response.data.data);
+        // console.log(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+        console.log(error.response.data);
+      });
+  }, [token, navigate]);
 
-  const handleLogout = async() =>{
+  const handleLogout = async () => {
     try {
-      await axios.post("https://bloggering-app.onrender.com/auth/logout");
-      localStorage.removeItem('token')
-      navigate('/');
+      await axios.post(`${import.meta.env.VITE_API_URL}/auth/logout`);
+      localStorage.removeItem("token");
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  
   const userToken = jwt_decode(token);
 
   const isCurrentUserAuthor = (author) => {
@@ -62,15 +58,12 @@ const ShowBlog = ({token}) => {
   };
 
   const truncateText = (text, maxLength) => {
-    const words = text.split(' ');
+    const words = text.split(" ");
     if (words.length > maxLength) {
-      return words.slice(0, maxLength).join(' ') + '...';
+      return words.slice(0, maxLength).join(" ") + "...";
     }
     return text;
-  }
-
-  
-
+  };
 
   return (
     <>
@@ -104,43 +97,45 @@ const ShowBlog = ({token}) => {
       </nav>
       <div>
         <div className="text-right">
-        <Link to={'/home/create'}>
+          <Link to={"/home/create"}>
             <MdOutlineAddBox className="text-green-500 text-4xl m-5  " />
-        </Link>
+          </Link>
         </div>
       </div>
-      {loading ? <Loader />: 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {blog.map((item) => (
-          <div key={item._id} className="shadow-lg m-5 p-4 rounded-3xl">
-            <div className="text-xl font-bold mb-2">
-              <h2>{item.title}</h2>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {blog.map((item) => (
+            <div key={item._id} className="shadow-lg m-5 p-4 rounded-3xl">
+              <div className="text-xl font-bold mb-2">
+                <h2>{item.title}</h2>
+              </div>
+              <div className="text-lg mb-2">
+                <h4>{truncateText(item.content, 20)}</h4>
+              </div>
+              <div className="flex">
+                <h4>By: {item.author} </h4>
+                <Link className="ml-3" to={`/home/detail/${item._id}`}>
+                  <BsInfoCircle className="text-2xl text-green-800 hover:text-black" />
+                </Link>
+              </div>
+              <div className="flex justify-end items-center gap-x-4 mt-4 p-4">
+                {isCurrentUserAuthor(item.author) && (
+                  <>
+                    <Link to={`/home/edit/${item._id}`}>
+                      <AiOutlineEdit className="text-2xl text-yellow-600 hover:text-black" />
+                    </Link>
+                    <Link to={`/home/delete/${item._id}`}>
+                      <MdOutlineDelete className="text-2xl text-red-600 hover:text-black" />
+                    </Link>
+                  </>
+                )}
+              </div>
             </div>
-            <div className="text-lg mb-2">
-              <h4>{truncateText(item.content, 20)}</h4>
-            </div>
-            <div className="flex">
-            <h4>By: {item.author} </h4>
-              <Link className="ml-3" to={`/home/detail/${item._id}`}>
-                    <BsInfoCircle className='text-2xl text-green-800 hover:text-black' />
-                  </Link>
-            </div>
-            <div className='flex justify-end items-center gap-x-4 mt-4 p-4'>
-              {isCurrentUserAuthor(item.author) && (
-                <>
-                  <Link to={`/home/edit/${item._id}`}>
-                    <AiOutlineEdit className='text-2xl text-yellow-600 hover:text-black' />
-                  </Link>
-                  <Link to={`/home/delete/${item._id}`}>
-                    <MdOutlineDelete className='text-2xl text-red-600 hover:text-black' />
-                  </Link>
-                </>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
-      }
+          ))}
+        </div>
+      )}
     </>
   );
 };

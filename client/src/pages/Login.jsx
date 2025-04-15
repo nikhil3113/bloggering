@@ -14,7 +14,7 @@ const Login = ({ setToken }) => {
     e.preventDefault();
     try {
       setLoading(true)
-      const response = await axios.post("https://bloggering-app.onrender.com/auth/login", {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/login`, {
         email,
         password,
       });

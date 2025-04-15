@@ -15,7 +15,7 @@ const SignUp = () => {
 
     try {
       setLoading(true)
-      const response = await axios.post("https://bloggering-app.onrender.com/auth", {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth`, {
         username,
         email,
         password,

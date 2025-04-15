@@ -16,7 +16,7 @@ const UpdateBlog = ({token}) => {
       return;
     }
 
-    axios.get(`https://bloggering-app.onrender.com/${id}`,{
+    axios.get(`${import.meta.env.VITE_API_URL}/${id}`,{
       headers:{
         Authorization: token
       }
@@ -34,7 +34,7 @@ const UpdateBlog = ({token}) => {
   const handleEditBlog = (e) =>{
     e.preventDefault()
     console.log("for submited");
-    axios.put(`https://bloggering-app.onrender.com/${id}`, {
+    axios.put(`${import.meta.env.VITE_API_URL}/${id}`, {
       title,
       content
     },{
