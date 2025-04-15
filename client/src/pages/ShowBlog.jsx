@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import logo from "../assets/logo.png";
 // import { PiBookOpenTextLight } from "react-icons/pi";
 import { MdOutlineAddBox } from "react-icons/md";
+import { FaBlog } from "react-icons/fa";
 // import { BiUserCircle } from "react-icons/bi";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BsInfoCircle } from "react-icons/bs";
@@ -66,77 +66,119 @@ const ShowBlog = ({ token }) => {
   };
 
   return (
-    <>
-      <nav className="bg-white border-gray-200 dark:bg-gray-900">
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <img src={logo} className="h-16 rounded-lg" alt="Logo" />
-
-          <div className=" md:block md:w-auto" id="navbar-default">
-            <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-              <li>
-                <Link
-                  className="text-xl block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                  aria-current="page"
-                  to={`/home/${userToken.id}`}
-                >
-                  Profile
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className=" text-xl block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                  aria-current="page"
-                  onClick={handleLogout}
-                >
-                  Logout
-                </Link>
-              </li>
-            </ul>
+    <div className="min-h-screen bg-gray-50">
+      {/* Enhanced Navigation */}
+      <nav className="bg-white shadow-sm sticky top-0 z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between h-16">
+            <Link to={"/"} className="flex items-center">
+              <FaBlog className="h-7 w-7"/>
+              <span className="ml-3 text-xl font-semibold text-gray-800">Bloggering</span>
+            </Link>
+            <div className="flex items-center">
+              <Link
+                to={`/home/${userToken.id}`}
+                className="px-4 py-2 text-gray-700 hover:text-indigo-600 transition-colors duration-200"
+              >
+                Profile
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="ml-4 px-4 py-2 text-gray-700 hover:text-indigo-600 transition-colors duration-200"
+              >
+                Logout
+              </button>
+            </div>
           </div>
         </div>
       </nav>
-      <div>
-        <div className="text-right">
-          <Link to={"/home/create"}>
-            <MdOutlineAddBox className="text-green-500 text-4xl m-5  " />
+  
+      {/* Header Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-6">
+        <div className="flex justify-between items-center">
+          <h1 className="text-3xl font-bold text-gray-900">Latest Posts</h1>
+          <Link 
+            to="/home/create"
+            className="flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors duration-200"
+          >
+            <MdOutlineAddBox className="mr-2 text-xl" />
+            <span>New Post</span>
           </Link>
         </div>
       </div>
+  
+      {/* Blog Posts Grid */}
       {loading ? (
-        <Loader />
+        <div className="flex justify-center items-center h-64">
+          <Loader />
+        </div>
       ) : (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {blog.map((item) => (
-            <div key={item._id} className="shadow-lg m-5 p-4 rounded-3xl">
-              <div className="text-xl font-bold mb-2">
-                <h2>{item.title}</h2>
-              </div>
-              <div className="text-lg mb-2">
-                <h4>{truncateText(item.content, 20)}</h4>
-              </div>
-              <div className="flex">
-                <h4>By: {item.author} </h4>
-                <Link className="ml-3" to={`/home/detail/${item._id}`}>
-                  <BsInfoCircle className="text-2xl text-green-800 hover:text-black" />
-                </Link>
-              </div>
-              <div className="flex justify-end items-center gap-x-4 mt-4 p-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {blog.map((item) => (
+              <div 
+                key={item._id} 
+                className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden border border-gray-100"
+              >
+                {/* Card Header with Title */}
+                <div className="p-5 border-b border-gray-100">
+                  <h2 className="text-xl font-bold text-gray-800 line-clamp-1">{item.title}</h2>
+                </div>
+                
+                {/* Card Content */}
+                <div className="p-5">
+                  <p className="text-gray-600 line-clamp-3 mb-4">
+                    {truncateText(item.content, 30)}
+                  </p>
+                  
+                  {/* Author and Details Link */}
+                  <div className="flex items-center justify-between mt-6 text-sm">
+                    <div className="flex items-center">
+                      <div className="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-800 font-bold">
+                        {item.author[0]}
+                      </div>
+                      <span className="ml-2 text-gray-700">{item.author}</span>
+                    </div>
+                    
+                    <Link 
+                      to={`/home/detail/${item._id}`}
+                      className="text-indigo-600 hover:text-indigo-800 flex  items-center group"
+                    >
+                      Read more
+                      <BsInfoCircle className="ml-1 group-hover:translate-x-1 transition-transform duration-200 mt-1" />
+                    </Link>
+                  </div>
+                </div>
+                
+                {/* Card Footer with Actions */}
                 {isCurrentUserAuthor(item.author) && (
-                  <>
-                    <Link to={`/home/edit/${item._id}`}>
-                      <AiOutlineEdit className="text-2xl text-yellow-600 hover:text-black" />
+                  <div className="bg-gray-50 px-5 py-3 flex justify-end space-x-3">
+                    <Link 
+                      to={`/home/edit/${item._id}`}
+                      className="p-2 rounded-full hover:bg-gray-200 transition-colors duration-200"
+                    >
+                      <AiOutlineEdit className="text-amber-600" />
                     </Link>
-                    <Link to={`/home/delete/${item._id}`}>
-                      <MdOutlineDelete className="text-2xl text-red-600 hover:text-black" />
+                    <Link 
+                      to={`/home/delete/${item._id}`}
+                      className="p-2 rounded-full hover:bg-gray-200 transition-colors duration-200"
+                    >
+                      <MdOutlineDelete className="text-red-600" />
                     </Link>
-                  </>
+                  </div>
                 )}
               </div>
+            ))}
+          </div>
+          
+          {blog.length === 0 && (
+            <div className="text-center py-12">
+              <p className="text-gray-500">No blog posts yet. Create your first post!</p>
             </div>
-          ))}
+          )}
         </div>
       )}
-    </>
+    </div>
   );
 };
 
